@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=0.8, shrink-to-fit=no">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/jquery-ui.min.css">
+		<link rel="stylesheet" href="css/jquery-ui.theme.min.css">
+		<link rel="stylesheet" href="css/jquery-ui.structure.min.css">
+		<link rel="stylesheet" href="css/app.css">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+		<title>Calculator</title>
+	</head>
+
+	<body>
+
+		<div class="container-fluid mt-4">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="card">
+						<div class="card-header">
+							Monthly Financials
+						</div>
+
+						<div class="card-body">
+							<form>
+								<div class="form-group">
+									<label>Rental / Mo</label>
+									<input class="form-control" type="text" id="rental_mo" />
+								</div>
+
+								<div class="form-group">
+									<label># of Units</label>
+									<input class="form-control" type="text" id="rental_units" value="1" />
+								</div>
+
+								<div class="form-group">
+									<label>Property Tax</label>
+									<input class="form-control" type="text" id="prop_tax" value="3000" />
+								</div>
+
+								<div class="form-group">
+									<label>Home Insurance</label>
+									<input class="form-control" type="text" id="prop_ins" value="1000" />
+								</div>
+
+								<div class="form-group">
+									<label>Annual Maintenance</label>
+									<input class="form-control" type="text" id="prop_main" value="500" />
+								</div>
+
+							</form>
+
+						</div>
+
+					</div>
+
+
+					<div class="card">
+						<div class="card-header">
+							Financials
+						</div>
+
+						<div class="card-body">
+							<form>
+								<div class="form-group">
+									<label>Prop Price</label>
+									<input class="form-control" type="text" id="prop_price" value="100000" />
+								</div>
+
+								<div class="form-group">
+									<label>Prop Down Payment %</label>
+									<input class="form-control" type="text" id="prop_down" value="25" />
+								</div>
+
+								<div class="form-group">
+									<label>Loan Period (Years)</label>
+									<input class="form-control" type="text" id="loan_period" value="15" />
+								</div>
+
+								<div class="form-group">
+									<label>Loan Interest Rate</label>
+									<input class="form-control" type="text" id="loan_interest" value="4.06" />
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-sm-6">
+					<div class="card">
+						<div class="card-header">
+							Outputs
+						</div>
+						<div class="card-body">
+							<table class="table table-striped">
+								<tbody>
+									<tr>
+										<td style="width: 200px;"><strong>Annual Revenue</strong></td>
+										<td class="annual_rev"></td>
+									</tr>
+									<tr>
+										<td><strong>Monthly Revenue</strong></td>
+										<td class="monthly_rev"></td>
+									</tr>
+									<tr>
+										<td style="width: 150px;"><strong>Purchase Price</strong></td>
+										<td class="prop_price"></td>
+									</tr>
+									<tr>
+										<td><strong>Down Payment</strong></td>
+										<td class="prop_down"></td>
+									</tr>
+									<tr>
+										<td><strong>Mortgage Interest / Mo</strong></td>
+										<td class="prop_mortgage"></td>
+									</tr>
+									<tr>
+										<td><strong>Monthly Net Profit</strong></td>
+										<td class="monthly_net"></td>
+									</tr>
+									<tr>
+										<td><strong>Annual Net Profit</strong></td>
+										<td class="annual_net"></td>
+									</tr>
+									<tr>
+										<td><strong>Capitalization Rate</strong></td>
+										<td class="cap_rate"></td>
+									</tr>
+									<tr>
+										<td><strong>Capitalization of Investment</strong></td>
+										<td class="cap_invest"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+
+
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
+		<script src="js/popper.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/chart.min.js"></script>
+		
+
+		<script>
+			function monthlyPayment(p, n, i) {
+				return p * i * (Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
+			}
+
+			$(document).ready(function() {
+
+				$('.form-control').keyup(function() {
+					
+					var rental_mo = $('#rental_mo').val();
+					var rental_units = $('#rental_units').val();
+					var prop_tax = $('#prop_tax').val();
+					var prop_ins = $('#prop_ins').val();
+					var prop_main = $('#prop_main').val();
+
+					var annual_rev = (((rental_mo * rental_units) * 12) - prop_tax - prop_ins - prop_main).toFixed(2);
+					var monthly_rev = (annual_rev / 12).toFixed(2);
+
+					$('.annual_rev').text('$' + annual_rev);
+					$('.monthly_rev').text('$' + monthly_rev);
+
+
+					var prop_price = $('#prop_price').val();
+					var prop_down = $('#prop_down').val();
+
+
+					var prop_price_val = (prop_price * 1).toFixed(2);
+					var prop_down_val = (prop_price * (prop_down / 100)).toFixed(2);
+
+					$('.prop_price').text('$' + prop_price_val);
+					$('.prop_down').text('$' + prop_down_val + ' | ' + prop_down + '%');
+
+					var loan_period = $('#loan_period').val();
+					var loan_interest = $('#loan_interest').val();
+
+					var monthly_payment; 
+					var payment_mo = loan_period * 12;
+					var monthly_interest_rate = loan_interest / 100 / 12;
+					var prop_price_updated = prop_price_val - prop_down_val;
+					
+					var monthly_payment = monthlyPayment(prop_price_updated, payment_mo, monthly_interest_rate).toFixed(2);;
+
+					$('.prop_mortgage').text('$' + monthly_payment);
+
+					var monthly_profit = (monthly_rev - monthly_payment).toFixed(2);
+					
+					$('.monthly_net').text('$' + monthly_profit);
+
+					var annual_profit = (monthly_profit * 12).toFixed(2);
+					
+					$('.annual_net').text('$' + annual_profit);
+
+					var cap_rate = ((monthly_profit * 12) / prop_price_val) * 100;
+
+					$('.cap_rate').text(cap_rate + '%');
+
+					var cap_investment = (annual_profit / prop_down_val) * 100;
+
+					$('.cap_invest').text(cap_investment + '%');
+
+
+				});
+
+			});
+
+		</script>
+
+		
+	</body>
+</html>

@@ -1,0 +1,68 @@
+/* Global Styles */
+body {
+	background-color: #B0C4DF;
+	font-size: 14px;
+  padding-bottom: 15px;
+}
+
+
+/* Checkbox Toggles */
+.toggle {
+	border: 1px solid #ddd;
+	width: 50px !important;
+  height: 20px !important;
+}
+.toggle .btn {
+	font-size: 13px;
+	padding: 0;
+}
+
+
+/* Card Styling */
+.card {
+  -webkit-box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.1);
+  box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+.card-header {
+  font-size: 18px;
+  background-color: #fff;
+}
+.light-grey {
+  background-color: #F6F7F9;
+}
+
+/* Form Enhancements */
+form, .form-control {
+  font-size: 13px;
+}
+.form-divider {
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Tables */
+table {
+  font-size: 13px;
+}
+.table thead th {
+  color: #969697;
+  text-transform: uppercase;
+  font-weight: 300;
+  border-top: none;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #F6F7F9;
+}
+.table td {
+  border-top: none;
+}
+.table .btn {
+  font-size: 11px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
